@@ -3,6 +3,9 @@
 ## When later trying to solve the inverse of a matrix, it
 ## first checks if the solution already exists in cache in
 ## order to determine the necessity to calculate again.
+## The code is based on vector example given in the 
+## Coursera course rprog-007 found on
+## https://class.coursera.org/rprog-007/human_grading/view/courses/972580/assessments/3/submissions
 
 
 ## The makeCacheMatrix function creates a matrix
@@ -16,11 +19,11 @@ makeCacheMatrix <- function(x = matrix()) {
     m<<-NULL
   }
   get<-function() x
-  setmatrix <- function(solve) m<<- solve
-  getmatrix <- function() m
+  setinverse <- function(solve) m<<- solve
+  getinverse <- function() m
   list(set=set, get=get,
-       setmatrix=setmatrix,
-       getmatrix=getmatrix)
+       setinverse=setinverse,
+       getinverse=getinverse)
 }
 
 ## The cacheSolve function checks if the calculation of
@@ -29,13 +32,13 @@ makeCacheMatrix <- function(x = matrix()) {
 ## inverse is calculated and is set in cache. 
 
 cacheSolve <- function(x=matrix(), ...) {
-  m<-x$getmatrix()
+  m<-x$getinverse()
   if(!is.null(m)){
     message("getting cached data")
     return(m)
   }
   matrix<-x$get()
   m <- solve(matrix, ...)
-  x$setmatrix(m)
+  x$setinverse(m)
   m
 }
